@@ -50,7 +50,7 @@ router.post('/likePost', verifyToken, (req, res) => {
         if (err) {
             return res.status(500).json({ error: err })
         } else {
-            res.json(result)
+            res.status(200).json(result)
         }
     })
 })
