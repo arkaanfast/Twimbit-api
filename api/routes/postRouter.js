@@ -36,16 +36,16 @@ router.get('/allPosts', verifyToken, (req, res) => {
         .populate("postedBy", "_id name")
         .populate("comments.postedBy", "_id name")
         .then((posts) => {
-            let resPost = [];
-            let count = 0;
-            for (var i = start; i < posts.length; i++) {
-                if (count == 10) {
-                    break;
-                }
-                resPost.push(posts[i]);
-                count += 1;
-            }
-            res.status(201).json({ posts: resPost, totalPosts: posts.length });
+            // let resPost = [];
+            // let count = 0;
+            // for (var i = start; i < posts.length; i++) {
+            //     if (count == 10) {
+            //         break;
+            //     }
+            //     resPost.push(posts[i]);
+            //     count += 1;
+            // }
+            res.status(201).json(posts);
         })
         .catch((err) => {
             res.status(500).json({ 'error': err });
