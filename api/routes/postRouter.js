@@ -30,6 +30,7 @@ router.post('/createPost', verifyToken, (req, res) => {
 });
 
 router.get('/allPosts', verifyToken, (req, res) => {
+    console.log(req.query.start || 0);
     Post.find()
         .populate("postedBy", "_id name")
         .populate("comments.postedBy", "_id name")

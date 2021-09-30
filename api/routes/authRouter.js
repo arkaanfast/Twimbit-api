@@ -9,7 +9,7 @@ dotenv.config()
 
 const router = Router();
 
-router.post('/signup', async (req, res) => {
+router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
     User.findOne({ email: email })
         .then((saveduser) => {
@@ -38,14 +38,14 @@ router.post('/signup', async (req, res) => {
 });
 
 
-router.post("/signin", (req, res) => {
+router.post("/login", (req, res) => {
     const { email, password } = req.body;
     User.findOne({ email: email })
         .then((savedUser) => {
             if (!savedUser) {
                 return res
                     .status(402)
-                    .json({ error: "User doesn't exist please signup" });
+                    .json({ error: "User doesn't exist please register" });
             }
 
             bcrypt
