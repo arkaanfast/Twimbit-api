@@ -85,7 +85,7 @@ router.post('/commentPost', verifyToken, (req, res) => {
             if (err) {
                 return res.status(500).json({ error: err })
             } else {
-                res.status(201).json(result)
+                res.status(201).json(result.comments)
             }
         })
 })
