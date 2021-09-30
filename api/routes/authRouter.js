@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
     User.findOne({ email: email })
         .then((saveduser) => {
             if (saveduser) {
-                return res.status(402).json({ error: "user already exists" });
+                return res.status(402).json({ message: "user already exists" });
             }
 
             bcrypt.hash(password, 10).then((hashedpassword) => {
@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
             });
         })
         .catch((err) => {
-            res.status(500).json({ 'error': err });
+            res.status(500).json({ 'message': err });
         });
 });
 
