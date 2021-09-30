@@ -46,7 +46,7 @@ router.post("/login", (req, res) => {
         .then((savedUser) => {
             if (!savedUser) {
                 return res
-                    .status(402)
+                    .status(500)
                     .json({ error: "User doesn't exist please register" });
             }
 
@@ -58,7 +58,7 @@ router.post("/login", (req, res) => {
                         const { _id, name, email } = savedUser
                         res.json({ token, user: { _id, name, email } })
                     } else {
-                        res.json({ message: "Invalid email or password" });
+                        res.status(500).json({ message: "Invalid email or password" });
                     }
                 })
                 .catch((err) => console.log(err));
