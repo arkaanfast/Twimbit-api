@@ -30,11 +30,23 @@ router.post('/createPost', verifyToken, (req, res) => {
 });
 
 router.get('/allPosts', verifyToken, (req, res) => {
-    console.log(req.query.start || 0);
+    let start = req.query.start || 0;
+
     Post.find()
         .populate("postedBy", "_id name")
         .populate("comments.postedBy", "_id name")
-        .then((posts) => res.json({ posts }))
+        .then((posts) => {
+            let resPost = [];
+            let count = 0;
+            for (var i = start; i < posts.length; i++) {
+                if (count == 10) {
+                    break;
+                }
+                resPost.push(posts[i]);
+                count += 1;
+            }
+            res.status(201).json({ posts: resPost, totalPosts: posts.length });
+        })
         .catch((err) => {
             res.status(500).json({ 'error': err });
         });
