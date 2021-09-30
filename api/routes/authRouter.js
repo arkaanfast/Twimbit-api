@@ -16,21 +16,23 @@ router.post('/register', async (req, res) => {
             if (saveduser) {
                 return res.status(500).json({ message: "user already exists" });
             }
+            else {
+                bcrypt.hash(password, 10).then((hashedpassword) => {
+                    const user = new User({
+                        email,
+                        password: hashedpassword,
+                        name,
+                    });
 
-            bcrypt.hash(password, 10).then((hashedpassword) => {
-                const user = new User({
-                    email,
-                    password: hashedpassword,
-                    name,
+                    user
+                        .save()
+                        .then((user) => {
+                            res.status(201).json({ message: "User saved!" });
+                        })
+                        .catch((err) => console.log(err));
                 });
+            }
 
-                user
-                    .save()
-                    .then((user) => {
-                        res.status(201).json({ message: "User saved!" });
-                    })
-                    .catch((err) => console.log(err));
-            });
         })
         .catch((err) => {
             res.status(500).json({ 'message': err });
