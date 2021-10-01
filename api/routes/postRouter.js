@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { Post } from '../models/postModel.js';
 import verifyToken from '../middelwares/verifyToken.js';
+import { resourceLimits } from 'worker_threads';
 
 
 const router = Router();
@@ -97,7 +98,7 @@ router.post('/commentPost', verifyToken, (req, res) => {
             if (err) {
                 return res.status(500).json({ error: err })
             } else {
-                res.status(201).json(result.comments)
+                res.status(201).json(result.comments[result.comments.length - 1])
             }
         })
 })
